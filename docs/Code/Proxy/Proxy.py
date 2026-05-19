@@ -35,12 +35,3 @@ class AutenticadorProxy(Login):
         print("Proxy: validações realizadas. Encaminhando ao serviço real...")
         
         return self.service.Autenticar(email, senha)
-
-
-if __name__ == "__main__":
-    autenticador_real = Autenticador()
-    
-    proxy = AutenticadorProxy(service=autenticador_real)
-    
-    sucesso = proxy.Autenticar("admin@unb.br", "123456")
-    print(f"Resultado da autenticação: {sucesso}")
