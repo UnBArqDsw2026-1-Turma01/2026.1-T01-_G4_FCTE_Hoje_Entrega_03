@@ -1,5 +1,6 @@
 from Factory.Factory import CreateConteudo, CreateCardapioRU, CreateEvento, Publicador, CreateNoticia, CreateEdital
 from Proxy.Proxy import Autenticador, AutenticadorProxy, Login
+from Builder.Builder import EventoBuilder, TipoDeEvento
 
 if __name__ == "__main__":
     
@@ -37,3 +38,35 @@ if __name__ == "__main__":
             print(conteudo.exibirConteudo())
     else:
         print("\nAcesso negado. Não foi possível publicar os conteúdos.")
+
+    print("\n--- Teste do Builder ---")
+
+    builder = EventoBuilder()
+
+    evento_customizado = (
+        builder
+        .comId("EVT-WS-001")
+        .comTitulo("Workshop de Arquitetura de Software")
+        .comTipo(TipoDeEvento.WORKSHOP)
+        .comData("2026-06-10")
+        .comLocal("Sala 302 - FCTE")
+        .comHorario("14:00", "17:00")
+        .comAgenda(["Padrões Criacionais", "Padrões Estruturais", "Padrões Comportamentais"])
+        .build()
+    )
+    print("\nEvento customizado:")
+    print(f"  {evento_customizado.exibirConteudo()}")
+
+    palestra = builder.criarPalestraMatutina()
+    print("\nPalestra matutina (atalho de conveniência):")
+    print(f"  {palestra.exibirConteudo()}")
+
+    evento_simples = (
+        builder
+        .comId("EVT-DEB-002")
+        .comTitulo("Debate sobre Educação")
+        .comTipo(TipoDeEvento.DEBATE)
+        .build()
+    )
+    print("\nEvento simples (apenas campos obrigatórios):")
+    print(f"  {evento_simples.exibirConteudo()}")
