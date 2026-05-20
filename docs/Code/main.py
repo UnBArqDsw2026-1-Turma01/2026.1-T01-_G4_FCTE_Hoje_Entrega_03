@@ -1,6 +1,7 @@
 from Factory.Factory import CreateConteudo, CreateCardapioRU, CreateEvento, Publicador, CreateNoticia, CreateEdital
 from Proxy.Proxy import Autenticador, AutenticadorProxy, Login
 from Builder.Builder import EventoBuilder, TipoDeEvento
+from Strategy.Strategy import Noticia, FiltrarCategoria, FiltrarData
 
 if __name__ == "__main__":
     
@@ -36,6 +37,14 @@ if __name__ == "__main__":
         print("--- Conteúdos do Publicador ---")
         for conteudo in publicador.conteudos:
             print(conteudo.exibirConteudo())
+
+        print("\n--- Teste do Strategy ---")
+        estrategia_cat = FiltrarCategoria("Tecnologia")
+        noticia_tech = Noticia(estrategia_cat)
+        noticia_tech.listar_conteudo("TEC-2026")
+        estrategia_data = FiltrarData("01/05/2026", "20/05/2026")
+        noticia_tech.estrategia_filtragem = estrategia_data
+        noticia_tech.listar_conteudo("DATA-5-2026")
     else:
         print("\nAcesso negado. Não foi possível publicar os conteúdos.")
 
