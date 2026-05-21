@@ -20,6 +20,7 @@
     - [3.4. Participações - Padrões de Projeto](/PadroesDeProjeto/3.4.ParticipacoesPadroes.md)
     - [3.5. Iniciativas Extras - Padrões de Projeto](/PadroesDeProjeto/3.5.IniciativasExtras.md)
       - [3.5.1. Atas de Reunião](/Atas/3.5.1.Atas_reuniao.md)
+        - [3.5.1.1. Reuniao 20/05/2026](/Atas/AtaReuniao-2026-20-05.md)
       - [3.5.2. Ferramentas Utilizadas](/PadroesDeProjeto/3.5.2.ferramentas_usadas.md)
       - [3.5.3. Diagramas de Caso de Uso](/PadroesDeProjeto/3.5.3.DiagramasDeCasoDeUso.md)
       
