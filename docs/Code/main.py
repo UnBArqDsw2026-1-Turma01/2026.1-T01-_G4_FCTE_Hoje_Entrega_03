@@ -2,6 +2,7 @@ from Factory.Factory import CreateConteudo, CreateCardapioRU, CreateEvento, Publ
 from Proxy.Proxy import Autenticador, AutenticadorProxy, Login
 from Builder.Builder import EventoBuilder, TipoDeEvento
 from Strategy.Strategy import Noticia, FiltrarCategoria, FiltrarData
+from Singleton.singleton import GerenciadorDeCache
 
 if __name__ == "__main__":
     
@@ -79,3 +80,23 @@ if __name__ == "__main__":
     )
     print("\nEvento simples (apenas campos obrigatórios):")
     print(f"  {evento_simples.exibirConteudo()}")
+
+    print("\n--- Teste do Singleton (Gerenciador de Cache) ---")
+    
+    print("\n[1] App abriu na Tela Principal (Sem internet)")
+    cache_home = GerenciadorDeCache()
+    cache_home.set_conexao_internet(False)
+    cache_home.obter_dado("noticias") 
+
+    print("\n[2] Usuário conectou no Wi-Fi")
+    cache_home.set_conexao_internet(True)
+
+    print("\n[3] Usuário navegou para a Tela do RU")
+    cache_ru = GerenciadorDeCache() 
+    cache_ru.obter_dado("ru") 
+
+    print("\n[4] Comprovando a Instância Única")
+    if cache_home is cache_ru:
+        print("✅ SUCESSO! 'cache_home' e 'cache_ru' são o exato mesmo objeto na memória.")
+    else:
+        print("❌ ERRO! As instâncias são diferentes.")
