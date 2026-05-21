@@ -3,6 +3,7 @@ from Proxy.Proxy import Autenticador, AutenticadorProxy, Login
 from Builder.Builder import EventoBuilder, TipoDeEvento
 from Strategy.Strategy import Noticia, FiltrarCategoria, FiltrarData
 from Mediator.Mediator import AuthenticationDialog
+from Observer.Observer import FeedService, Conteudo, HomeScreen, NoticiasScreen, NotificacoesService
 
 if __name__ == "__main__":
     
@@ -90,3 +91,38 @@ if __name__ == "__main__":
     dialog.senha.digitar("123456")
     dialog.lembrar.alternar()
     dialog.botao_login.clicar()
+
+    print("\n--- Teste do Observer ---")
+
+    feed = FeedService()
+
+    home = HomeScreen()
+    noticias = NoticiasScreen()
+    notificacoes = NotificacoesService()
+
+    feed.registrar(home)
+    feed.registrar(noticias)
+    feed.registrar(notificacoes)
+
+    print("\n[Publicando conteúdo — todos os observers notificados]")
+    feed.publicarConteudo(Conteudo(
+        titulo="Processo seletivo aberto na Orcestra",
+        tipo="Oportunidade",
+        data="2026-05-20"
+    ))
+
+    print()
+    feed.publicarConteudo(Conteudo(
+        titulo="Semana de Computacao da FCTE 2025",
+        tipo="Evento",
+        data="2026-06-13"
+    ))
+
+    print("\n[Removendo NotificacoesService e publicando novamente]")
+    feed.remover(notificacoes)
+
+    feed.publicarConteudo(Conteudo(
+        titulo="Cardapio do RU - Quinta-feira",
+        tipo="Cardapio",
+        data="2026-05-20"
+    ))
