@@ -4,6 +4,7 @@ from Builder.Builder import EventoBuilder, TipoDeEvento
 from Strategy.Strategy import Noticia, FiltrarCategoria, FiltrarData
 from Mediator.Mediator import AuthenticationDialog
 from Observer.Observer import FeedService, Conteudo, HomeScreen, NoticiasScreen, NotificacoesService
+from Composite.Composite import ItemConteudo, SecaoFeed, FeedController
 
 if __name__ == "__main__":
     
@@ -126,3 +127,36 @@ if __name__ == "__main__":
         tipo="Cardapio",
         data="2026-05-20"
     ))
+
+    print("\n--- Teste do Composite ---")
+
+    controller = FeedController()
+
+    noticia_ia = ItemConteudo(
+        "Avancos em IA",
+        "Novos modelos de linguagem",
+        "Tecnologia"
+    )
+    noticia_web = ItemConteudo(
+        "Web 3.0",
+        "O futuro da internet descentralizada",
+        "Tecnologia"
+    )
+    evento_workshop = ItemConteudo(
+        "Workshop de Python",
+        "Aprenda Python do zero",
+        "Evento"
+    )
+
+    secao_tecnologia = SecaoFeed("Tecnologia")
+    secao_eventos = SecaoFeed("Eventos")
+
+    secao_tecnologia.add(noticia_ia)
+    secao_tecnologia.add(noticia_web)
+    secao_eventos.add(evento_workshop)
+
+    controller.adicionarConteudo(secao_tecnologia)
+    controller.adicionarConteudo(secao_eventos)
+
+    print("\n[Exibindo hierarquia completa do feed]")
+    controller.exibirFeed()
