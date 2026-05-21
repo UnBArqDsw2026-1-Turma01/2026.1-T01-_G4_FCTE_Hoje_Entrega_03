@@ -2,6 +2,7 @@ from Factory.Factory import CreateConteudo, CreateCardapioRU, CreateEvento, Publ
 from Proxy.Proxy import Autenticador, AutenticadorProxy, Login
 from Builder.Builder import EventoBuilder, TipoDeEvento
 from Strategy.Strategy import Noticia, FiltrarCategoria, FiltrarData
+from Mediator.Mediator import AuthenticationDialog
 
 if __name__ == "__main__":
     
@@ -79,3 +80,13 @@ if __name__ == "__main__":
     )
     print("\nEvento simples (apenas campos obrigatórios):")
     print(f"  {evento_simples.exibirConteudo()}")
+
+    print("\n--- Teste do Mediator ---")
+
+    dialog = AuthenticationDialog()
+
+    print("\n[Tela de Login - usuário interagindo com os componentes]")
+    dialog.email.digitar("admin@unb.br")
+    dialog.senha.digitar("123456")
+    dialog.lembrar.alternar()
+    dialog.botao_login.clicar()
