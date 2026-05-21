@@ -1,15 +1,15 @@
-# Ata de Reuniao 01
+# Ata de Reunião 01
 
-## Identificacao da Reuniao
+## Identificacão da Reunião
 
 | Campo | Valor |
 |-------|-------|
 | **Data** | 20 de Maio de 2026 |
-| **Horario** | 21:40 - 22:30 |
-| **Duracao** | 50 minutos |
+| **Horário** | 21:40 - 22:30 |
+| **DUração** | 50 minutos |
 | **Local** | Online(Teams) |
 | **Pauta** | Documentação/Codificação do Singleton e Mediator |
-| **Gravacao** |  |
+| **Gravação** |  |
 
 ## Presentes
 
@@ -29,18 +29,18 @@
 - Pendente a documentacao do diagrama de Mediator.
 - Divisao do grupo em dois subgrupos (2 em Mediator e 2 em Singleton).
 
-## Decisoes
+## Decisões
 
 - Manter a divisao em subgrupos para acelerar a entrega.
 - Priorizar a documentacao do diagrama de Mediator como pendencia principal.
 
-## Proximos passos
+## Próximos passos
 
 - Concluir a documentacao do diagrama de Mediator.
 - Revisar a documentacao e a codificacao de Singleton e Mediator.
 
-## Historico de versoes
+## Histórico de versões
 
-| Versao | Data | Descricao | Autor(es) | Revisor(es) | Data da revisao |
-|--------|------|-----------|-----------|-------------|-----------------|
-| `1.0` | 20/05/2026 | Criacao do documento e Documentaçaõ da reunião. | [Kauã Vale Leão](https://github.com/KauaVL)  |  |  |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Data da revisão | Detalhes da Revisão |
+|--------|------|-----------|-----------|-------------|-----------------|---------------------|
+| `1.0` | 20/05/2026 | Criação do documento e Documentação da reunião. | [Kauã Vale Leão](https://github.com/KauaVL)  |  [Tiago Lemes](https://github.com/TiagoTeixeira-2005) |  21/05/2026 | Revisado e aprovado|
