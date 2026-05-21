@@ -9,7 +9,7 @@
 | **DUração** | 50 minutos |
 | **Local** | Online(Teams) |
 | **Pauta** | Documentação/Codificação do Singleton e Mediator |
-| **Gravação** |  |
+| **Gravação** | https://youtu.be/xt6klBKDwjA  |
 
 ## Presentes
 
