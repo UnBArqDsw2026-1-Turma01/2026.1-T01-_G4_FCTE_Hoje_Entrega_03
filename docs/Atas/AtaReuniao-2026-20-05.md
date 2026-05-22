@@ -27,11 +27,11 @@
 - Documentacao dos padroes Singleton e Mediator.
 - Codificacao dos dois padroes.
 - Pendente a documentacao do diagrama de Mediator.
-- Divisao do grupo em dois subgrupos (2 em Mediator e 2 em Singleton).
+- Divisao do grupo em dois subgrupos (2 em Mediator e 2 em Singleton), mas de forma que ambos os subgrupos participem de ambos os padroes GOF.
 
 ## Decisões
 
-- Manter a divisao em subgrupos para acelerar a entrega.
+- Manter a divisao em subgrupos iniciais para acelerar a entrega.
 - Priorizar a documentacao do diagrama de Mediator como pendencia principal.
 
 ## Próximos passos
