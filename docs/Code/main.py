@@ -25,16 +25,20 @@ def testar_proxy():
     return Publicador_Validado
 
 def testar_factory(Publicador_Validado):
-    print("\n--- Teste do Factory ---")
+    print("--- Teste do Factory ---")
     if Publicador_Validado:
         print("\nLogin autorizado! Prosseguindo para a publicação de conteúdos...\n")
         publicador = Publicador()
 
         factory_noticia = CreateNoticia("NOT-001")
         factory_edital = CreateEdital("EDI-2024")
+        factory_ru = CreateCardapioRU("CARD-001")
+        factory_evento = CreateEvento("EVEN-001")
 
         noticia_publicada = publicador.publicarConteudo(factory_noticia)
         edital_publicado = publicador.publicarConteudo(factory_edital)
+        ru_publicado = publicador.publicarConteudo(factory_ru)
+        evento_publicado = publicador.publicarConteudo(factory_evento)
 
         print("--- Conteúdos do Publicador ---")
         for conteudo in publicador.conteudos:
