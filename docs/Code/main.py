@@ -2,6 +2,7 @@ from Factory.Factory import CreateConteudo, CreateCardapioRU, CreateEvento, Publ
 from Proxy.Proxy import Autenticador, AutenticadorProxy, Login
 from Builder.Builder import EventoBuilder, TipoDeEvento
 from Strategy.Strategy import Noticia, FiltrarCategoria, FiltrarData
+from Singleton.singleton import GerenciadorDeCache
 from Mediator.Mediator import AuthenticationDialog
 from Observer.Observer import FeedService, Conteudo, HomeScreen, NoticiasScreen, NotificacoesService
 from Composite.Composite import ItemConteudo, SecaoFeed, FeedController
@@ -83,6 +84,27 @@ def testar_builder():
     print("\nEvento simples (apenas campos obrigatórios):")
     print(f"  {evento_simples.exibirConteudo()}")
 
+def testar_singleton():
+    print("\n--- Teste do Singleton (Gerenciador de Cache) ---")
+    
+    print("\n[1] App abriu na Tela Principal (Sem internet)")
+    cache_home = GerenciadorDeCache()
+    cache_home.set_conexao_internet(False)
+    cache_home.obter_dado("noticias") 
+
+    print("\n[2] Usuário conectou no Wi-Fi")
+    cache_home.set_conexao_internet(True)
+
+    print("\n[3] Usuário navegou para a Tela do RU")
+    cache_ru = GerenciadorDeCache() 
+    cache_ru.obter_dado("ru") 
+
+    print("\n[4] Comprovando a Instância Única")
+    if cache_home is cache_ru:
+        print("✅ SUCESSO! 'cache_home' e 'cache_ru' são o exato mesmo objeto na memória.")
+    else:
+        print("❌ ERRO! As instâncias são diferentes.")
+        
 def testar_mediator():
     print("\n--- Teste do Mediator ---")
     dialog = AuthenticationDialog()
@@ -170,10 +192,11 @@ if __name__ == "__main__":
         print("2 - Factory")
         print("3 - Strategy")
         print("4 - Builder")
-        print("5 - Mediator")
-        print("6 - Observer")
-        print("7 - Composite")
-        print("8 - Executar Todos os Testes")
+        print("5 - Singleton")
+        print("6 - Mediator")
+        print("7 - Observer")
+        print("8 - Composite")
+        print("9 - Executar Todos os Testes")
         print("0 - Sair")
         print("==============================")
         
@@ -190,16 +213,19 @@ if __name__ == "__main__":
         elif opcao == "4":
             testar_builder()
         elif opcao == "5":
-            testar_mediator()
+            testar_singleton()
         elif opcao == "6":
-            testar_observer()
+            testar_mediator()
         elif opcao == "7":
-            testar_composite()
+            testar_observer()
         elif opcao == "8":
+            testar_composite()
+        elif opcao == "9":
             status_login = testar_proxy()
             testar_factory(status_login)
             testar_strategy(status_login)
             testar_builder()
+            testar_singleton()
             testar_mediator()
             testar_observer()
             testar_composite()
