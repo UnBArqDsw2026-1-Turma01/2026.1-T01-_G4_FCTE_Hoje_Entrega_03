@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 
 
-# === Componente (Component) ===
 class Conteudo(ABC):
     def __init__(self, code: str):
         self._code = code
@@ -11,7 +10,6 @@ class Conteudo(ABC):
         pass
 
 
-# === Componentes Concretos (ConcreteComponent) ===
 class CardapioRU(Conteudo):
     def exibirConteudo(self) -> str:
         return f"Exibindo o cardápio (Código: {self._code})"
@@ -32,7 +30,6 @@ class Noticia(Conteudo):
         return f"Exibindo a notícia (Código: {self._code})"
 
 
-# === Decorator Base ===
 class ConteudoDecorator(Conteudo):
     def __init__(self, conteudo: Conteudo):
         super().__init__(conteudo._code)
@@ -42,7 +39,6 @@ class ConteudoDecorator(Conteudo):
         return self._conteudo.exibirConteudo()
 
 
-# === Decoradores Concretos (ConcreteDecorator) ===
 class DestaqueDecorator(ConteudoDecorator):
     def exibirConteudo(self) -> str:
         return f"[DESTAQUE] {self._conteudo.exibirConteudo()}"
@@ -55,7 +51,7 @@ class FixadoDecorator(ConteudoDecorator):
 
 class SeloOficialDecorator(ConteudoDecorator):
     def exibirConteudo(self) -> str:
-        return f"[✓ OFICIAL FCTE] {self._conteudo.exibirConteudo()}"
+        return f"[OFICIAL FCTE] {self._conteudo.exibirConteudo()}"
 
 
 class TraducaoDecorator(ConteudoDecorator):
@@ -67,7 +63,6 @@ class TraducaoDecorator(ConteudoDecorator):
         return f"{self._conteudo.exibirConteudo()} | (Tradução {self._idioma} disponível)"
 
 
-# === Demonstração ===
 if __name__ == "__main__":
     noticia = Noticia("N-2026-01")
     print("Original:")

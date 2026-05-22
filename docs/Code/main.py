@@ -101,9 +101,9 @@ def testar_singleton():
 
     print("\n[4] Comprovando a Instância Única")
     if cache_home is cache_ru:
-        print("✅ SUCESSO! 'cache_home' e 'cache_ru' são o exato mesmo objeto na memória.")
+        print("SUCESSO: 'cache_home' e 'cache_ru' são o exato mesmo objeto na memória.")
     else:
-        print("❌ ERRO! As instâncias são diferentes.")
+        print("ERRO: As instâncias são diferentes.")
         
 def testar_mediator():
     print("\n--- Teste do Mediator ---")

@@ -1,4 +1,3 @@
-# 6.3.1 Classe de Dados Interna (CardapioRU)
 class CardapioRU:
     def __init__(self, prato: str, tipo_refeicao: str, data: str):
         self.prato = prato
@@ -6,10 +5,9 @@ class CardapioRU:
         self.data = data
 
     def __str__(self):
-        return f"[{self.tipo_refeicao}] {self.prato} | Data: {self.data}"
+        return f"[{self.tipo_refeicao}]\n{self.prato}\nData: {self.data}"
 
 
-# 6.3.2 Adaptee — API externa com formato incompativel
 class RUApiExterna:
     def buscarDados(self) -> dict:
         return {
@@ -19,7 +17,6 @@ class RUApiExterna:
         }
 
 
-# 6.3.3 Adapter — converte o formato externo para o formato interno
 class CardapioRUAdapter:
     def __init__(self, api: RUApiExterna):
         self._api = api
@@ -33,7 +30,6 @@ class CardapioRUAdapter:
         )
 
 
-# 6.3.4 Cliente — usa o Adapter sem conhecer a API externa
 class CardapioService:
     def __init__(self, adapter):
         self._adapter = adapter
@@ -43,7 +39,6 @@ class CardapioService:
         print(f"[CardapioService] Cardapio carregado: {cardapio}")
 
 
-# 6.3.5 Exemplo de uso
 api_externa = RUApiExterna()
 adapter = CardapioRUAdapter(api_externa)
 service = CardapioService(adapter)
