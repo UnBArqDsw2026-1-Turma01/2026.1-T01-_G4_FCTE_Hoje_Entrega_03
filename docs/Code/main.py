@@ -6,9 +6,11 @@ from Singleton.singleton import GerenciadorDeCache
 from Mediator.Mediator import AuthenticationDialog
 from Observer.Observer import FeedService, Conteudo, HomeScreen, NoticiasScreen, NotificacoesService
 from Composite.Composite import ItemConteudo, SecaoFeed, FeedController
+from Decorator.Decorator import Noticia as NoticiaDecorator, Edital as EditalDecorator, CardapioRU as CardapioRU_Decorator, Evento as EventoDecorator, DestaqueDecorator, FixadoDecorator, SeloOficialDecorator, TraducaoDecorator
+from Adapter.adapter import CardapioRU, RUApiExterna, CardapioRUAdapter, CardapioService
 
 def testar_proxy():
-    print("--- Teste do Proxy ---")
+    print("\n--- Teste do Proxy ---")
     autenticador_real = Autenticador()
     autenticador_proxy = AutenticadorProxy(service=autenticador_real)
     
@@ -23,7 +25,7 @@ def testar_proxy():
     return Publicador_Validado
 
 def testar_factory(Publicador_Validado):
-    print("--- Teste do Factory ---")
+    print("\n--- Teste do Factory ---")
     if Publicador_Validado:
         print("\nLogin autorizado! Prosseguindo para a publicação de conteúdos...\n")
         publicador = Publicador()
@@ -183,10 +185,44 @@ def testar_composite():
     print("\n[Exibindo hierarquia completa do feed]")
     controller.exibirFeed()
 
+def testar_decorator():
+    print("\n--- Teste do Decorator ---")
+    
+    noticia = NoticiaDecorator("N-2026-01")
+    print("Original:")
+    print(f"  {noticia.exibirConteudo()}\n")
+
+    noticia_oficial = SeloOficialDecorator(noticia)
+    print("Com selo oficial:")
+    print(f"  {noticia_oficial.exibirConteudo()}\n")
+
+    noticia_decorada = DestaqueDecorator(
+        FixadoDecorator(
+            SeloOficialDecorator(
+                TraducaoDecorator(noticia)
+            )
+        )
+    )
+    print("Notícia totalmente decorada (Destaque + Fixado + Selo Oficial + Tradução):")
+    print(f"  {noticia_decorada.exibirConteudo()}\n")
+
+    evento = EventoDecorator("E-2026-07")
+    evento_destaque = DestaqueDecorator(SeloOficialDecorator(evento))
+    print("Evento com destaque e selo oficial:")
+    print(f"  {evento_destaque.exibirConteudo()}")
+
+def testar_adapter():
+    print("\n--- Teste do Adapter ---")
+    api_externa = RUApiExterna()
+    adapter = CardapioRUAdapter(api_externa)
+    service = CardapioService(adapter)
+
+    service.exibirCardapio()
+
 if __name__ == "__main__":
     while True:
         print("\n==============================")
-        print("     MENU DE TESTES PADS     ")
+        print("     MENU DE TESTES     ")
         print("==============================")
         print("1 - Proxy")
         print("2 - Factory")
@@ -196,7 +232,9 @@ if __name__ == "__main__":
         print("6 - Mediator")
         print("7 - Observer")
         print("8 - Composite")
-        print("9 - Executar Todos os Testes")
+        print("9 - Decorator")
+        print("10 - Adapter")
+        print("11 - Executar Todos os Testes")
         print("0 - Sair")
         print("==============================")
         
@@ -220,7 +258,11 @@ if __name__ == "__main__":
             testar_observer()
         elif opcao == "8":
             testar_composite()
-        elif opcao == "9":
+        elif opcao == "9": 
+            testar_decorator()
+        elif opcao == "10":
+            testar_adapter()
+        elif opcao == "11": 
             status_login = testar_proxy()
             testar_factory(status_login)
             testar_strategy(status_login)
@@ -229,6 +271,8 @@ if __name__ == "__main__":
             testar_mediator()
             testar_observer()
             testar_composite()
+            testar_decorator()
+            testar_adapter()
         elif opcao == "0":
             print("Encerrando execução.")
             break
