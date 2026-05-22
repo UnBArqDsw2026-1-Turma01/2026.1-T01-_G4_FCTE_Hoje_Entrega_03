@@ -3,13 +3,13 @@ from Proxy.Proxy import Autenticador, AutenticadorProxy, Login
 from Builder.Builder import EventoBuilder, TipoDeEvento
 from Strategy.Strategy import Noticia, FiltrarCategoria, FiltrarData
 from Singleton.singleton import GerenciadorDeCache
+from Mediator.Mediator import AuthenticationDialog
+from Observer.Observer import FeedService, Conteudo, HomeScreen, NoticiasScreen, NotificacoesService
+from Composite.Composite import ItemConteudo, SecaoFeed, FeedController
 
-if __name__ == "__main__":
-    
+def testar_proxy():
     print("--- Teste do Proxy ---")
-    
     autenticador_real = Autenticador()
-    
     autenticador_proxy = AutenticadorProxy(service=autenticador_real)
     
     print("\n[Tentativa 1 - Dados Inválidos]")
@@ -20,13 +20,12 @@ if __name__ == "__main__":
     senha_valida = "123456"
     
     Publicador_Validado = autenticador_proxy.Autenticar(email_valido, senha_valida)
+    return Publicador_Validado
 
+def testar_factory(Publicador_Validado):
     print("--- Teste do Factory ---")
-
-
     if Publicador_Validado:
         print("\nLogin autorizado! Prosseguindo para a publicação de conteúdos...\n")
-        
         publicador = Publicador()
 
         factory_noticia = CreateNoticia("NOT-001")
@@ -38,8 +37,12 @@ if __name__ == "__main__":
         print("--- Conteúdos do Publicador ---")
         for conteudo in publicador.conteudos:
             print(conteudo.exibirConteudo())
+    else:
+        print("\nAcesso negado. Não foi possível publicar os conteúdos.")
 
-        print("\n--- Teste do Strategy ---")
+def testar_strategy(Publicador_Validado):
+    print("\n--- Teste do Strategy ---")
+    if Publicador_Validado:
         estrategia_cat = FiltrarCategoria("Tecnologia")
         noticia_tech = Noticia(estrategia_cat)
         noticia_tech.listar_conteudo("TEC-2026")
@@ -47,10 +50,10 @@ if __name__ == "__main__":
         noticia_tech.estrategia_filtragem = estrategia_data
         noticia_tech.listar_conteudo("DATA-5-2026")
     else:
-        print("\nAcesso negado. Não foi possível publicar os conteúdos.")
+        print("\nAcesso negado. Não foi possível filtrar os conteúdos.")
 
+def testar_builder():
     print("\n--- Teste do Builder ---")
-
     builder = EventoBuilder()
 
     evento_customizado = (
@@ -81,6 +84,7 @@ if __name__ == "__main__":
     print("\nEvento simples (apenas campos obrigatórios):")
     print(f"  {evento_simples.exibirConteudo()}")
 
+def testar_singleton():
     print("\n--- Teste do Singleton (Gerenciador de Cache) ---")
     
     print("\n[1] App abriu na Tela Principal (Sem internet)")
@@ -100,3 +104,133 @@ if __name__ == "__main__":
         print("✅ SUCESSO! 'cache_home' e 'cache_ru' são o exato mesmo objeto na memória.")
     else:
         print("❌ ERRO! As instâncias são diferentes.")
+        
+def testar_mediator():
+    print("\n--- Teste do Mediator ---")
+    dialog = AuthenticationDialog()
+
+    print("\n[Tela de Login - usuário interagindo com os componentes]")
+    dialog.email.digitar("admin@unb.br")
+    dialog.senha.digitar("123456")
+    dialog.lembrar.alternar()
+    dialog.botao_login.clicar()
+
+def testar_observer():
+    print("\n--- Teste do Observer ---")
+    feed = FeedService()
+
+    home = HomeScreen()
+    noticias = NoticiasScreen()
+    notificacoes = NotificacoesService()
+
+    feed.registrar(home)
+    feed.registrar(noticias)
+    feed.registrar(notificacoes)
+
+    print("\n[Publicando conteúdo — todos os observers notificados]")
+    feed.publicarConteudo(Conteudo(
+        titulo="Processo seletivo aberto na Orcestra",
+        tipo="Oportunidade",
+        data="2026-05-20"
+    ))
+
+    print()
+    feed.publicarConteudo(Conteudo(
+        titulo="Semana de Computacao da FCTE 2025",
+        tipo="Evento",
+        data="2026-06-13"
+    ))
+
+    print("\n[Removendo NotificacoesService e publicando novamente]")
+    feed.remover(notificacoes)
+
+    feed.publicarConteudo(Conteudo(
+        titulo="Cardapio do RU - Quinta-feira",
+        tipo="Cardapio",
+        data="2026-05-20"
+    ))
+
+def testar_composite():
+    print("\n--- Teste do Composite ---")
+    controller = FeedController()
+
+    noticia_ia = ItemConteudo(
+        "Avancos em IA",
+        "Novos modelos de linguagem",
+        "Tecnologia"
+    )
+    noticia_web = ItemConteudo(
+        "Web 3.0",
+        "O futuro da internet descentralizada",
+        "Tecnologia"
+    )
+    evento_workshop = ItemConteudo(
+        "Workshop de Python",
+        "Aprenda Python do zero",
+        "Evento"
+    )
+
+    secao_tecnologia = SecaoFeed("Tecnologia")
+    secao_eventos = SecaoFeed("Eventos")
+
+    secao_tecnologia.add(noticia_ia)
+    secao_tecnologia.add(noticia_web)
+    secao_eventos.add(evento_workshop)
+
+    controller.adicionarConteudo(secao_tecnologia)
+    controller.adicionarConteudo(secao_eventos)
+
+    print("\n[Exibindo hierarquia completa do feed]")
+    controller.exibirFeed()
+
+if __name__ == "__main__":
+    while True:
+        print("\n==============================")
+        print("     MENU DE TESTES PADS     ")
+        print("==============================")
+        print("1 - Proxy")
+        print("2 - Factory")
+        print("3 - Strategy")
+        print("4 - Builder")
+        print("5 - Singleton")
+        print("6 - Mediator")
+        print("7 - Observer")
+        print("8 - Composite")
+        print("9 - Executar Todos os Testes")
+        print("0 - Sair")
+        print("==============================")
+        
+        opcao = input("Escolha uma opção: ").strip()
+
+        if opcao == "1":
+            testar_proxy()
+        elif opcao == "2":
+            status_login = testar_proxy()
+            testar_factory(status_login)
+        elif opcao == "3":
+            status_login = testar_proxy()
+            testar_strategy(status_login)
+        elif opcao == "4":
+            testar_builder()
+        elif opcao == "5":
+            testar_singleton()
+        elif opcao == "6":
+            testar_mediator()
+        elif opcao == "7":
+            testar_observer()
+        elif opcao == "8":
+            testar_composite()
+        elif opcao == "9":
+            status_login = testar_proxy()
+            testar_factory(status_login)
+            testar_strategy(status_login)
+            testar_builder()
+            testar_singleton()
+            testar_mediator()
+            testar_observer()
+            testar_composite()
+        elif opcao == "0":
+            print("Encerrando execução.")
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
